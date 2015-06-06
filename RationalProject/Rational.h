@@ -119,7 +119,7 @@ namespace rational {
 
 		// read/write operations
 		void read(std::istream& is);
-		void write(std::ostream& os, const RationalPrintType type = Rational::FRACTION);
+		void write(std::ostream& os, const RationalPrintType type = Rational::FRACTION) const;
 
 		// read/write operators
 		// set flag to use decimal format
@@ -127,6 +127,8 @@ namespace rational {
 		// i/o operators -- these are used to read/write from a stream using << and >>
 		friend std::ostream& operator<<(std::ostream& os, const Rational& rationalObj);
 		friend std::istream& operator>>(std::istream& is, Rational& rationalObj);
+
+		std::string toString() const;
 
 	private:
 		Fraction rationalFraction; // this is the fraction that will be used to represent the rational objects

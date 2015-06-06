@@ -132,6 +132,9 @@ double Fraction::toDouble() const {
 
 // return the inverse of this fraction
 Fraction Fraction::inv() const {
+	if (getNumerator() == 0 ){
+		return Fraction(0);
+	}
 	return Fraction(getDenominator(), getNumerator());
 }
 

@@ -11,12 +11,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{9EEEF9C3-6DBD-49F3-8F0E-2E16571D622E}</ProjectGuid>
-    <RootNamespace>RationalProject</RootNamespace>
+    <ProjectGuid>{56AD8794-040D-4A45-8532-AE9882B4C57C}</ProjectGuid>
+    <RootNamespace>RationalProjectTest</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
@@ -39,19 +39,18 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>E:\Ryan%27s Folder\Programming\C++\gtest-1.7.0\include;E:\Ryan%27s Folder\Programming\C++\boost_1_58_0;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\Ryan%27s Folder\Programming\C++\gtest-1.7.0\msvc\gtest-md\Debug;E:\Ryan%27s Folder\Programming\C++\boost_1_58_0\stage\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>E:\Ryan%27s Folder\Programming\C++\gtest-1.7.0\include;..\RationalProject;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\Ryan%27s Folder\Programming\C++\gtest-1.7.0\msvc\gtest-md\Debug;../Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <WarningLevel>Level4</WarningLevel>
+      <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>gtestd.lib;gtest_main-mdd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>gtestd.lib;gtest_main-mdd.lib;RationalProject.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -69,14 +68,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\Fraction.h" />
-    <ClInclude Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\Rational.h" />
-    <ClInclude Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\RationalArray.h" />
+    <ProjectReference Include="..\RationalProject\RationalProject.vcxproj">
+      <Project>{9eeef9c3-6dbd-49f3-8f0e-2e16571d622e}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\Fraction.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\Main.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\Rational.cpp" />
+    <ClCompile Include="RationalTest.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProjectTest\TestMain.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -4,6 +4,7 @@
 #include <algorithm>
 
 namespace rational {
+
 	Rational::RationalPrintType Rational::defaultPrintType = Rational::FRACTION;
 
 	// constructors - use initializer lists to init all members
@@ -205,6 +206,12 @@ namespace rational {
 
 	// raise this rational to an integral power
 	Rational Rational::pow(const int value){
+		if (value < 0) {
+			// get the positive power of the fraction
+			Rational posExp = pow(std::abs(value));
+			return posExp.inv();  // return 1 / posExp
+		}
+
 		Rational tmp(*this);
 
 		// result is 1
@@ -220,7 +227,9 @@ namespace rational {
 		double newDenominator = std::pow(rationalFraction.getDenominator(), value);
 
 		// construct new rational from numerator over denominator
-		tmp = Rational(newNumerator / newDenominator);
+		Rational rationalNum(newNumerator);  // converts from double
+		Rational rationalDenom(newDenominator);  // converts from double
+		tmp = rationalNum / rationalDenom;
 
 		// return 
 		return tmp;
@@ -505,8 +514,8 @@ namespace rational {
 		int indexOfSlash = line.find_last_of('/');
 		// this is a rational fraction
 		if (indexOfSlash > 0) {
-			std::string numerator = line.substr(0,indexOfSlash);
-			std::string denominator = line.substr(indexOfSlash+1);
+			std::string numerator = line.substr(0, indexOfSlash);
+			std::string denominator = line.substr(indexOfSlash + 1);
 
 			// set using the obtained substrings
 			set(std::stoi(numerator), std::stoi(denominator));
@@ -519,12 +528,12 @@ namespace rational {
 	}
 
 	// writes to output stream using specified format (default/not specified is fraction)
-	void Rational::write(std::ostream& os, const RationalPrintType type) {
+	void Rational::write(std::ostream& os, const RationalPrintType type) const {
 		// determine format type
 		switch (type) {
 		case Rational::DECIMAL:
 			os << toDouble(); // convert to double
-				break;
+			break;
 		case Rational::FRACTION:
 		default:
 			Fraction tmp = getRationalFraction();
@@ -540,24 +549,31 @@ namespace rational {
 	// set print flag
 	// this allows the user to use the << operator and specify the format
 	// ex: std::cout << usedecimal << Rational(1,2); will output "0.5"
+
 	std::ostream& usedecimal(std::ostream& os) {
 		Rational::defaultPrintType = Rational::DECIMAL;
 		return os;
 	}
 
 	// read from object and write to outstream
-	std::ostream& operator<<(std::ostream& os, const Rational& rationalObj) {		
+	std::ostream& operator<<(std::ostream& os, const Rational& rationalObj) {
 		Rational tmp(rationalObj); // make copy
 		tmp.write(os, Rational::defaultPrintType);  // call write (by default, uses fraction format specification)
 		return os;
 	}
-
 
 	// read from input stream and write into object
 	std::istream& operator>>(std::istream &is, Rational& rationalObj) {
 		rationalObj.read(is);
 
 		return is;
+	}
+
+	// to string implementation
+	std::string Rational::toString() const {
+		std::ostringstream oss;
+		write(oss);
+		return oss.str();
 	}
 
 	// convert a double value to a Fraction
@@ -596,4 +612,6 @@ namespace rational {
 		return Fraction(static_cast<int>(newValue), static_cast<int>(std::pow(10, powOfTen - 1)));
 	}
 }
+
+
 
