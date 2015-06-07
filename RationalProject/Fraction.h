@@ -1,22 +1,33 @@
+/*
+* File: Fraction.h
+* Author: Ryan Johnson
+* Email: johnsonrw82@csu.fullerton.edu
+*
+* Header definition for class Fraction
+* Additional capability such as lowest terms reduction on an object and some static functions has been added
+*/
+
+#ifndef FRACTION_H
+#define FRACTION_H
+
 #include <cstdlib>
 #include <iostream>
 #include <sstream>
 #include <string>
 
-
 /*
- * class definition for Fraction
- *
- * Fractions can be initialized in 3 ways:
- *   Default - no args				Fraction()
- *   To a numerator/denominator		Fraction(int, int)
- *   From another fraction			Fraction(Fraction&)
- * Fractions also support the = operator to:
- *   An integer			Fraction f1 = 12;
- *   Another Fraction	Fraction f2 = f1;
- * Fractions can be retreived as a double (num / denom)
- * Fractions can be printed to the screen in lowest terms
- */
+* class definition for Fraction
+*
+* Fractions can be initialized in 3 ways:
+*   Default - no args				Fraction()
+*   To a numerator/denominator		Fraction(int, int)
+*   From another fraction			Fraction(Fraction&)
+* Fractions also support the = operator to:
+*   An integer			Fraction f1 = 12;
+*   Another Fraction	Fraction f2 = f1;
+* Fractions can be retreived as a double (num / denom)
+* Fractions can be printed to the screen in lowest terms
+*/
 class Fraction {
 public:	
 	// default constructor
@@ -35,12 +46,13 @@ public:
 	// get denominator
 	int getDenominator() const;
 
-	// operator overloads
+	// operator overloads - arithmetic operators
 	Fraction operator+(const Fraction& fraction);
 	Fraction operator-(const Fraction& fraction);
 	Fraction operator*(const Fraction& fraction);
 	Fraction operator/(const Fraction& fraction);
 
+	// assignment operators
 	Fraction& operator=(const int integerValue);
 	Fraction& operator=(Fraction fraction);
 	// overload for <<, declared as friend
@@ -82,3 +94,6 @@ inline std::string numToString(T num) {
 	ss << num;
 	return ss.str();
 }
+
+
+#endif

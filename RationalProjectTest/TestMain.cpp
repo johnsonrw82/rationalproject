@@ -1,3 +1,5 @@
+// main function for running unit tests
+
 #include <gtest/gtest.h>
 
 namespace {

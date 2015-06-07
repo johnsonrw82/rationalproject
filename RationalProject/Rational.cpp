@@ -1,3 +1,11 @@
+/**
+* File: Rational.cpp
+* Author: Ryan Johnson
+* Email: johnsonrw82@csu.fullerton.edu
+*
+* Implementation of Rational number class, derived from Fracion
+*/
+
 #include "Rational.h"
 #include <string>
 #include <sstream>
@@ -12,24 +20,24 @@ namespace rational {
 
 	// this constructor provides a default initialization for denominator, allowing it to be used
 	// for init with a single numerator, or both
-	Rational::Rational(const int numerator, const int denominator) : rationalFraction(numerator, denominator) {
-		Fraction::toLowestTerms(rationalFraction);
+	Rational::Rational(const int numerator, const int denominator) : Fraction(numerator, denominator) {
+		Fraction::toLowestTerms(*this); // reduce to lowest terms
 	}
 	// call the double version of this constructor
 	Rational::Rational(const float floatVal) : Rational((double)floatVal) {}
 	// init from a rational object
-	Rational::Rational(const Rational& rationalObj) : rationalFraction(rationalObj.rationalFraction) {
-		Fraction::toLowestTerms(rationalFraction);
+	Rational::Rational(const Rational& rationalObj) : Fraction(rationalObj) {
+		Fraction::toLowestTerms(*this);   // reduce to lowest terms
 	}
 
 	// create a Rational from a Fraction
-	Rational::Rational(const Fraction& fractionObj) : rationalFraction(fractionObj) {
-		Fraction::toLowestTerms(rationalFraction);
+	Rational::Rational(const Fraction& fractionObj) : Fraction(fractionObj) {
+		Fraction::toLowestTerms(*this);   // reduce to lowest terms
 	}
 
 	// this constructor will use a double value to create a fraction object using a helper function
-	Rational::Rational(const double doubleVal) : rationalFraction(doubleToFraction(doubleVal)) {
-		Fraction::toLowestTerms(rationalFraction);
+	Rational::Rational(const double doubleVal) : Fraction(doubleToFraction(doubleVal)) {
+		Fraction::toLowestTerms(*this);  // reduce to lowest terms
 	}
 
 
@@ -49,8 +57,9 @@ namespace rational {
 	Rational Rational::operator=(const double value) {
 		// copy and swap
 		Rational tmp(value);
-
-		std::swap(rationalFraction, tmp.rationalFraction);
+		
+		this->setNumerator(tmp.getNumerator());
+		this->setDenominator(tmp.getDenominator());
 
 		return *this;
 	}
@@ -58,7 +67,8 @@ namespace rational {
 		// copy and swap
 		Rational tmp(fractionObj);
 
-		std::swap(rationalFraction, tmp.rationalFraction);
+		this->setNumerator(tmp.getNumerator());
+		this->setDenominator(tmp.getDenominator());
 
 		return *this;
 	}
@@ -66,7 +76,8 @@ namespace rational {
 		// copy and swap
 		Rational tmp(rationalObj);
 
-		std::swap(rationalFraction, tmp.rationalFraction);
+		this->setNumerator(tmp.getNumerator());
+		this->setDenominator(tmp.getDenominator());
 
 		return *this;
 	}
@@ -212,6 +223,7 @@ namespace rational {
 			return posExp.inv();  // return 1 / posExp
 		}
 
+		// make copy
 		Rational tmp(*this);
 
 		// result is 1
@@ -220,7 +232,7 @@ namespace rational {
 		}
 
 		// raise to power
-		Fraction rationalFraction = tmp.getRationalFraction();
+		Fraction rationalFraction = tmp;
 
 		// compute new values -- since they can yield non-integer results, construct a new Rational from these values
 		double newNumerator = std::pow(rationalFraction.getNumerator(), value);
@@ -254,8 +266,8 @@ namespace rational {
 
 	Rational Rational::operator+=(const Rational& rationalObj) {
 		// get the rational fractions representing each rational
-		Fraction fraction1 = getRationalFraction();
-		Fraction fraction2 = rationalObj.getRationalFraction();
+		Fraction fraction1 = *this;
+		Fraction fraction2 = rationalObj;
 
 		// add fractions
 		fraction1 = fraction1 + fraction2;
@@ -264,7 +276,7 @@ namespace rational {
 		Fraction::toLowestTerms(fraction1);
 
 		// set this rational fraction
-		setRationalFraction(fraction1);
+		*this = fraction1;
 
 		// return
 		return *this;
@@ -315,16 +327,16 @@ namespace rational {
 
 	Rational Rational::operator*=(const Rational& rationalObj) {
 		// get this rational's fraction
-		Fraction fraction = getRationalFraction();
+		Fraction fraction = *this;
 
 		// multiply these fractions
-		fraction = fraction * rationalObj.getRationalFraction();
+		fraction = fraction * rationalObj;
 
 		// reduce to lowest terms
 		Fraction::toLowestTerms(fraction);
 
 		// set this fraction
-		setRationalFraction(fraction);
+		*this = fraction;
 
 		// return this object
 		return *this;
@@ -347,16 +359,16 @@ namespace rational {
 	}
 
 	Rational Rational::operator/=(const Rational& rationalObj) {
-		Fraction fraction = getRationalFraction();
+		Fraction fraction = *this;
 
 		// divide this rational's fraction by the object fraction
-		fraction = fraction / rationalObj.getRationalFraction();
+		fraction = fraction / rationalObj;
 
 		// reduce to lowest terms
 		Fraction::toLowestTerms(fraction);
 
 		// set the rational fraction
-		setRationalFraction(fraction);
+		*this = fraction;
 
 		// return this object
 		return *this;
@@ -365,13 +377,13 @@ namespace rational {
 	// unary arithmetic operations
 	// return the negation of this rational object
 	Rational Rational::negate() const {
-		Fraction fraction = getRationalFraction();
+		Fraction fraction = *this;
 		// negate by multiplying numerator by -1
 		return Rational(fraction.getNumerator() * -1, fraction.getDenominator());
 	}
 	// return the absolute value of this rational object
 	Rational Rational::abs() const {
-		Fraction fraction = getRationalFraction();
+		Fraction fraction = *this;
 		// return the abs value by taking the abs value of both num/denom
 		return Rational(std::abs(fraction.getNumerator()), std::abs(fraction.getDenominator()));
 	}
@@ -387,7 +399,7 @@ namespace rational {
 
 	// return the inverse (reciprocal) of this rational object
 	Rational Rational::inv() const {
-		Fraction fraction = getRationalFraction();
+		Fraction fraction = *this;
 
 		// fraction's method to invert;
 		fraction = fraction.inv();
@@ -407,8 +419,8 @@ namespace rational {
 	}
 	// Less-than-or-equal operator, returns true if the supplied rational is less than or equal to this
 	bool Rational::operator<=(const Rational& rationalObj) const {
-		Fraction fraction1 = getRationalFraction();
-		Fraction fraction2 = rationalObj.getRationalFraction();
+		Fraction fraction1 = *this;
+		Fraction fraction2 = rationalObj;
 
 		// convert to common denominators
 		Fraction::toCommonDenominator(fraction1, fraction2);
@@ -424,8 +436,8 @@ namespace rational {
 	}
 	// Greater-than-or-equal operator, returns true if the supplied rational is greater than or equal to this
 	bool Rational::operator>=(const Rational& rationalObj) const {
-		Fraction fraction1 = getRationalFraction();
-		Fraction fraction2 = rationalObj.getRationalFraction();
+		Fraction fraction1 = *this;
+		Fraction fraction2 = rationalObj;
 
 		// convert to common denominators
 		Fraction::toCommonDenominator(fraction1, fraction2);
@@ -435,8 +447,8 @@ namespace rational {
 	}
 	// equality operator -- returns true if this rationl is equal to the supplied rational
 	bool Rational::operator==(const Rational& rationalObj) const {
-		Fraction fraction1 = getRationalFraction();
-		Fraction fraction2 = rationalObj.getRationalFraction();
+		Fraction fraction1 = *this;
+		Fraction fraction2 = rationalObj;
 
 		// convert to common denominators
 		Fraction::toCommonDenominator(fraction1, fraction2);
@@ -489,23 +501,6 @@ namespace rational {
 		*this = rationalObj; // use overloaded assignment operator
 	}
 
-	// retreival operations
-	// get the numerator of this rational
-	int Rational::getNumerator() const {
-		// return the fraction's numerator
-		return getRationalFraction().getNumerator();
-	}
-	// get the denominator of this rational
-	int Rational::getDenominator() const {
-		// return the fraction's denominator
-		return getRationalFraction().getDenominator();
-	}
-	// retrive this rational as a double
-	double Rational::toDouble() const {
-		// return the double representation of the fraction object
-		return getRationalFraction().toDouble();
-	}
-
 	// read/write operations
 	void Rational::read(std::istream& is) {
 		std::string line;
@@ -536,7 +531,7 @@ namespace rational {
 			break;
 		case Rational::FRACTION:
 		default:
-			Fraction tmp = getRationalFraction();
+			Fraction tmp = *this;
 			Fraction::toLowestTerms(tmp); // ensure in lowest terms
 			os << tmp; // print out the fraction 
 		}
@@ -549,7 +544,6 @@ namespace rational {
 	// set print flag
 	// this allows the user to use the << operator and specify the format
 	// ex: std::cout << usedecimal << Rational(1,2); will output "0.5"
-
 	std::ostream& usedecimal(std::ostream& os) {
 		Rational::defaultPrintType = Rational::DECIMAL;
 		return os;

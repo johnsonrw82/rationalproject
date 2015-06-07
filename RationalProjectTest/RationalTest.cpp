@@ -1,8 +1,17 @@
+/*
+* File: RationalTest.cpp
+* Author: Ryan Johnson
+* Email: johnsonrw82@csu.fullerton.edu
+* 
+* Rational class unit tests - written for use with the GoogleTest framework
+*/
+
 #include "Rational.h"
 
 #include <gtest/gtest.h>
 using namespace rational;
 
+// test fixture class
 class RationalTest : public ::testing::Test {
 protected:
 	virtual void SetUp() {
@@ -160,6 +169,14 @@ TEST_F(RationalTest, TestAdd) {
 
 	EXPECT_EQ(r3.add(twoThirds), 0);
 	EXPECT_EQ(r3 + twoThirds, 0);
+
+	// add float
+	EXPECT_EQ(Rational(1.5), one + (float)0.5);
+	EXPECT_EQ(Rational(1.5), one.add((float)0.5));
+
+	// add double
+	EXPECT_EQ(Rational(1.5), one + (double)0.5);
+	EXPECT_EQ(Rational(1.5), one.add((double)0.5));
 }
 
 // test subtract
@@ -178,6 +195,14 @@ TEST_F(RationalTest, TestSubtract) {
 	// subtract from a negative
 	EXPECT_EQ(r3.subtract(twoThirds), Rational(-4,3));
 	EXPECT_EQ(r3 - twoThirds, Rational(-4,3));
+
+	// subtract float
+	EXPECT_EQ(half, one - (float)0.5);
+	EXPECT_EQ(half, one.subtract((float)0.5));
+
+	// subtract double
+	EXPECT_EQ(half, one - (double)0.5);
+	EXPECT_EQ(half, one.subtract((double)0.5));
 }
 
 // test muliply
@@ -196,6 +221,14 @@ TEST_F(RationalTest, TestMultiply) {
 	// multiply by negative
 	EXPECT_EQ(r3.multiply(twoThirds), Rational(-4, 9));
 	EXPECT_EQ(r3 * twoThirds, Rational(-4, 9));
+
+	// multiply by float
+	EXPECT_EQ(Rational(1,3), twoThirds * (float)0.5);
+	EXPECT_EQ(Rational(1,3), twoThirds.multiply((float)0.5));
+
+	// multiply by double
+	EXPECT_EQ(Rational(1,3), twoThirds * (double)0.5);
+	EXPECT_EQ(Rational(1,3), twoThirds.multiply((double)0.5));
 }
 
 // test divide
@@ -214,23 +247,31 @@ TEST_F(RationalTest, TestDivide) {
 	// divide by negative
 	EXPECT_EQ(r3.divide(twoThirds), -1);
 	EXPECT_EQ(r3 / twoThirds, -1);
+
+	// divide by float
+	EXPECT_EQ(Rational(4,3), twoThirds / (float)0.5);
+	EXPECT_EQ(Rational(4,3), twoThirds.divide((float)0.5));
+
+	// divide by double
+	EXPECT_EQ(Rational(4,3), twoThirds / (double)0.5);
+	EXPECT_EQ(Rational(4,3), twoThirds.divide((double)0.5));
 }
 
 // test pow
 TEST_F(RationalTest, TestPow) {
-	EXPECT_EQ(half.pow(2), Rational(1,4));
+	EXPECT_EQ(Rational(1, 4), half.pow(2));
 	ASSERT_NE(half, Rational(1,4));  // assert non mutating
 	
-	EXPECT_EQ(twoThirds.pow(3), Rational(8, 27));
+	EXPECT_EQ(Rational(8, 27), twoThirds.pow(3));
 
 	// raise to 0
-	EXPECT_EQ(half.pow(0), 1);
+	EXPECT_EQ(Rational(1), half.pow(0));
 	// raise to 1
-	EXPECT_EQ(half.pow(1), half);
+	EXPECT_EQ(half, half.pow(1));
 
 	// raise to negative
 	Rational r(1, 4);
-	EXPECT_EQ(r.pow(-2), 16);
+	EXPECT_EQ(Rational(16), r.pow(-2));
 
 	Rational actual = twoThirds.pow(-2);
 	Rational expected = Rational(9, 4);

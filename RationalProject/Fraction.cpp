@@ -1,3 +1,12 @@
+/*
+* File: Fraction.cpp
+* Author: Ryan Johnson
+* Email: johnsonrw82@csu.fullerton.edu
+*
+* Implementation for class Fraction
+* Additional capability such as lowest terms reduction on an object and some static functions has been added
+*/
+
 #include "Fraction.h"
 #include <algorithm>
 
