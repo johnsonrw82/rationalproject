@@ -73,6 +73,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProjectTest\RationalArrayTest.cpp" />
     <ClCompile Include="RationalTest.cpp" />
     <ClCompile Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProjectTest\TestMain.cpp" />
   </ItemGroup>

@@ -77,6 +77,7 @@
     <ClCompile Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\Fraction.cpp" />
     <ClCompile Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\Main.cpp" />
     <ClCompile Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\Rational.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\RationalArray.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

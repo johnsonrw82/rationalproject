@@ -35,5 +35,8 @@
     <ClCompile Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\Rational.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\RationalArray.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
