@@ -11,6 +11,8 @@
 #include <sstream>
 #include <algorithm>
 
+using namespace rational::exception;
+
 namespace rational {
 
 	Rational::RationalPrintType Rational::defaultPrintType = Rational::FRACTION;
@@ -21,18 +23,33 @@ namespace rational {
 	// this constructor provides a default initialization for denominator, allowing it to be used
 	// for init with a single numerator, or both
 	Rational::Rational(const int numerator, const int denominator) : Fraction(numerator, denominator) {
-		Fraction::toLowestTerms(*this); // reduce to lowest terms
+		try {
+			Fraction::toLowestTerms(*this);  // reduce to lowest terms
+		}
+		catch (DivideByZeroException &ex) {
+			throw ex;
+		}
 	}
 	// call the double version of this constructor
 	Rational::Rational(const float floatVal) : Rational((double)floatVal) {}
 	// init from a rational object
 	Rational::Rational(const Rational& rationalObj) : Fraction(rationalObj) {
-		Fraction::toLowestTerms(*this);   // reduce to lowest terms
+		try {
+			Fraction::toLowestTerms(*this);  // reduce to lowest terms
+		}
+		catch (DivideByZeroException &ex) {
+			throw ex;
+		}
 	}
 
 	// create a Rational from a Fraction
 	Rational::Rational(const Fraction& fractionObj) : Fraction(fractionObj) {
-		Fraction::toLowestTerms(*this);   // reduce to lowest terms
+		try {
+			Fraction::toLowestTerms(*this);  // reduce to lowest terms
+		}
+		catch (DivideByZeroException &ex) {
+			throw ex;
+		}
 	}
 
 	// this constructor will use a double value to create a fraction object using a helper function
@@ -141,28 +158,53 @@ namespace rational {
 	}
 	Rational Rational::operator*(const Rational& rationalObj){
 		Rational tmp(*this);
-		tmp *= rationalObj;
-		return tmp;
+		try {
+			tmp *= rationalObj;
+			return tmp;
+		}
+		catch (DivideByZeroException &ex) {
+			throw ex;
+		}
 	}
 	Rational Rational::operator/(const int value){
 		Rational tmp(*this);
-		tmp /= value;
-		return tmp;
+		try {
+			tmp /= value;
+			return tmp;
+		}
+		catch (DivideByZeroException &ex) {
+			throw ex;
+		}
 	}
 	Rational Rational::operator/(const float value){
 		Rational tmp(*this);
-		tmp /= value;
-		return tmp;
+		try {
+			tmp /= value;
+			return tmp;
+		}
+		catch (DivideByZeroException &ex) {
+			throw ex;
+		}
 	}
 	Rational Rational::operator/(const double value){
 		Rational tmp(*this);
-		tmp /= value;
-		return tmp;
+		try {
+			tmp /= value;
+			return tmp;
+		}
+		catch (DivideByZeroException &ex) {
+			throw ex;
+		}
 	}
 	Rational Rational::operator/(const Rational& rationalObj){
 		Rational tmp(*this);
-		tmp /= rationalObj;
-		return tmp;
+		try {
+			tmp /= rationalObj;
+			return tmp;
+		}
+		catch (DivideByZeroException &ex) {
+			throw ex;
+		}
 	}
 
 	// binary operations -- the four major operations are implemented in terms of their in-fix counterparts
@@ -200,19 +242,44 @@ namespace rational {
 		return *this * value;
 	}
 	Rational Rational::multiply(const Rational& rationalObj){
-		return *this * rationalObj;
+		try {
+			return *this * rationalObj;
+		}
+		catch (DivideByZeroException &ex) {
+			throw ex;
+		}
 	}
 	Rational Rational::divide(const int value){
-		return *this / value;
+		try {
+			return *this / value;
+		}
+		catch (DivideByZeroException &ex) {
+			throw ex;
+		}
 	}
 	Rational Rational::divide(const double value){
-		return *this / value;
+		try {
+			return *this / value;
+		}
+		catch (DivideByZeroException &ex) {
+			throw ex;
+		}
 	}
 	Rational Rational::divide(const float value){
-		return *this / value;
+		try {
+			return *this / value;
+		}
+		catch (DivideByZeroException &ex) {
+			throw ex;
+		}
 	}
 	Rational Rational::divide(const Rational& rationalObj){
-		return *this / rationalObj;
+		try {
+			return *this / rationalObj;
+		}
+		catch (DivideByZeroException &ex) {
+			throw ex;
+		}
 	}
 
 	// raise this rational to an integral power
@@ -241,6 +308,10 @@ namespace rational {
 		// construct new rational from numerator over denominator
 		Rational rationalNum(newNumerator);  // converts from double
 		Rational rationalDenom(newDenominator);  // converts from double
+
+		if (rationalDenom == 0) {
+			throw DivideByZeroException(__FILE__, __LINE__);
+		}
 		tmp = rationalNum / rationalDenom;
 
 		// return 
@@ -326,46 +397,71 @@ namespace rational {
 	}
 
 	Rational Rational::operator*=(const Rational& rationalObj) {
-		// get this rational's fraction
-		Fraction fraction = *this;
+		try {
+			// get this rational's fraction
+			Fraction fraction = *this;
 
-		// multiply these fractions
-		fraction = fraction * rationalObj;
+			// multiply these fractions
+			fraction = fraction * rationalObj;
 
-		// reduce to lowest terms
-		Fraction::toLowestTerms(fraction);
+			// reduce to lowest terms
+			Fraction::toLowestTerms(fraction);
 
-		// set this fraction
-		*this = fraction;
+			// set this fraction
+			*this = fraction;
 
-		// return this object
-		return *this;
+			// return this object
+			return *this;
+		}
+		catch (DivideByZeroException &ex) {
+			throw ex;
+		}
 	}
 
 	// division
 	Rational Rational::operator/=(const int value) {
-		*this /= (double)value;
-		return *this;
+		try {
+			*this /= (double)value;
+			return *this;
+		}
+		catch (DivideByZeroException &ex) {
+			throw ex;
+		}
 	}
 
 	Rational Rational::operator/=(const float value) {
-		*this /= (double)value;
-		return *this;
+		try {
+			*this /= (double)value;
+			return *this;
+		}
+		catch (DivideByZeroException &ex) {
+			throw ex;
+		}
 	}
 
 	Rational Rational::operator/=(const double value) {
-		*this /= Rational(value);
-		return *this;
+		try {
+			*this /= Rational(value);
+			return *this;
+		}
+		catch (DivideByZeroException &ex) {
+			throw ex;
+		}
 	}
 
 	Rational Rational::operator/=(const Rational& rationalObj) {
 		Fraction fraction = *this;
 
 		// divide this rational's fraction by the object fraction
-		fraction = fraction / rationalObj;
+		try {
+			fraction = fraction / rationalObj;
 
-		// reduce to lowest terms
-		Fraction::toLowestTerms(fraction);
+			// reduce to lowest terms
+			Fraction::toLowestTerms(fraction);
+		}
+		catch (DivideByZeroException &ex) {
+			throw ex;
+		}
 
 		// set the rational fraction
 		*this = fraction;
@@ -506,38 +602,55 @@ namespace rational {
 		std::string line;
 		std::getline(is, line);
 
-		int indexOfSlash = line.find_last_of('/');
-		// this is a rational fraction
-		if (indexOfSlash > 0) {
-			std::string numerator = line.substr(0, indexOfSlash);
-			std::string denominator = line.substr(indexOfSlash + 1);
+		// regular expression matching a grouping of numbers, optionally containing a single /, where only one decimal point may occur
+		std::regex rationalRegex("^([\\d\\-]*\\.?[\\d]+)(\\/([\\d\\-]*\\.?[\\d]+))?\\s*$");
+		std::smatch matchResults; // object that will hold the match results
 
-			// set using the obtained substrings
-			set(std::stoi(numerator), std::stoi(denominator));
+		// if the line matches, it's a valid rational
+		if (std::regex_search(line, matchResults, rationalRegex)) {
+			std::string numerator = matchResults[1];  // first capture group contains numerator/single number
+			// third capture group contains denominator, if present
+			std::string denominator = (matchResults[3] == "") ? (std::string)"1" : matchResults[3];  // make sure there was a denominator (assume 1 otherwise)
+			double numValue = std::stod(numerator);
+			double denValue = std::stod(denominator);
+			Rational n(numValue);
+			Rational d(denValue);
+
+			// try to divide
+			try {
+				*this = n / d;
+			}
+			catch (DivideByZeroException &ex) {
+				throw ex;
+			}
+			
 		}
-		// assume it's numeric (would want to do more error checking here)
 		else {
-			// use double
-			set(std::stod(line));
-		}
+			throw InvalidFormatException(line, __FILE__, __LINE__);
+		}		
 	}
 
 	// writes to output stream using specified format (default/not specified is fraction)
 	void Rational::write(std::ostream& os, const RationalPrintType type) const {
-		// determine format type
-		switch (type) {
-		case Rational::DECIMAL:
-			os << toDouble(); // convert to double
-			break;
-		case Rational::FRACTION:
-		default:
-			Fraction tmp = *this;
-			Fraction::toLowestTerms(tmp); // ensure in lowest terms
-			os << tmp; // print out the fraction 
-		}
+		try {
+			// determine format type
+			switch (type) {
+			case Rational::DECIMAL:
+				os << toDouble(); // convert to double
+				break;
+			case Rational::FRACTION:
+			default:
+				Fraction tmp = *this;
+				Fraction::toLowestTerms(tmp); // ensure in lowest terms
+				os << tmp; // print out the fraction 
+			}
 
-		// clear default print flag
-		Rational::defaultPrintType = Rational::FRACTION;
+			// clear default print flag
+			Rational::defaultPrintType = Rational::FRACTION;
+		}
+		catch (DivideByZeroException &ex) {
+			throw ex;
+		}
 	}
 
 	// read/write operators
@@ -552,19 +665,32 @@ namespace rational {
 	// read from object and write to outstream
 	std::ostream& operator<<(std::ostream& os, const Rational& rationalObj) {
 		Rational tmp(rationalObj); // make copy
-		tmp.write(os, Rational::defaultPrintType);  // call write (by default, uses fraction format specification)
-		return os;
+		try {
+			tmp.write(os, Rational::defaultPrintType);  // call write (by default, uses fraction format specification)
+			return os;
+		}
+		catch (DivideByZeroException &ex) {
+			throw ex;
+		}
+
 	}
 
 	// read from input stream and write into object
 	std::istream& operator>>(std::istream &is, Rational& rationalObj) {
-		rationalObj.read(is);
-
-		return is;
+		try {
+			rationalObj.read(is);
+			return is;
+		}
+		catch (DivideByZeroException &ex) {
+			throw ex;
+		}
+		catch (InvalidFormatException &ex) {
+			throw ex;
+		}
 	}
 
 	// to string implementation
-	std::string Rational::toString() const {
+	std::string Rational::toString() const {		
 		std::ostringstream oss;
 		write(oss);
 		return oss.str();

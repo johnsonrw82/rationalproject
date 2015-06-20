@@ -10,6 +10,7 @@
 #include "Fraction.h"
 #include <algorithm>
 
+using namespace rational::exception;
 
 // default constructor
 Fraction::Fraction() : numerator(0), denominator(1) {}
@@ -27,8 +28,8 @@ void Fraction::setNumerator(const int numerator) {
 
 // set denominator
 void Fraction::setDenominator(const int denominator) {
-	// if the denominator is negative, and current denominator is not already negative, multiply the numerator by -1
-	if (denominator < 0 && getDenominator() > 0) {
+	// if the denominator is negative, multiply the numerator by -1
+	if (denominator < 0) {
 		setNumerator(getNumerator() * -1);
 	}
 	this->denominator = std::abs(denominator);
@@ -93,6 +94,11 @@ Fraction Fraction::operator*(const Fraction& fraction) {
 	Fraction tmp(*this);
 
 	tmp.setNumerator(tmp.getNumerator() * fraction.getNumerator());
+
+	// divide by zero (masked in a multiply)
+	if (tmp.getDenominator() == 0 || fraction.getDenominator() == 0) {
+		throw DivideByZeroException(__FILE__, __LINE__);
+	}
 	tmp.setDenominator(tmp.getDenominator() * fraction.getDenominator());
 
 	return tmp;
@@ -102,10 +108,24 @@ Fraction Fraction::operator*(const Fraction& fraction) {
 Fraction Fraction::operator/(const Fraction& fraction) {
 	Fraction tmp(fraction);
 
+	// divide by zero -- if argument fraction is zero, then it's a DBZ
+	if (fraction.getNumerator() == 0) {
+		throw DivideByZeroException(__FILE__, __LINE__);
+	}
+
 	// invert the fraction - dividing a fraction by a fraction is multiplying by the inverse
 	tmp = tmp.inv();
 
 	return *this * tmp;
+}
+
+// equality operators
+bool Fraction::operator==(const Fraction& fraction) const {
+	return getNumerator() == fraction.getNumerator() && getDenominator() == fraction.getDenominator();
+}
+
+bool Fraction::operator!=(const Fraction& fraction) const {
+	return !(*this == fraction);
 }
 
 // overload of the << operator.
@@ -134,8 +154,9 @@ void Fraction::printFractionInLowestTerms() {
 double Fraction::toDouble() const {
 	// return 0 when denominator is 0
 	if ( getDenominator() == 0 ) {
-		return 0;
+		throw DivideByZeroException(__FILE__, __LINE__);
 	}
+
 	return (double)getNumerator()/(double)getDenominator();
 }
 
@@ -163,11 +184,16 @@ int Fraction::getLcm(const int num1, const int num2) {
 	int divisor = std::min(num1, num2);
 	// dividend is the max of the two numbers
 	int dividend = std::max(num1, num2);
-	// get the GCD
+	// get the GCD -- prevent divide by zero
+	if (divisor == 0) {
+		throw DivideByZeroException(__FILE__, __LINE__);
+	}
+
 	int gcd = getGcd(divisor, dividend % divisor);
 
+	// divide by zero exception
 	if (gcd == 0) {
-		return 0; // not good...
+		throw DivideByZeroException(__FILE__, __LINE__);
 	}
 
 	// the LCM is the product of the two numbers, divided by GCD
@@ -187,6 +213,7 @@ std::string Fraction::toLowestTermsString() {
 		result += "/" + numToString(getDenominator());
 		result += " is invalid.";
 	}
+
 	// this will be true for 0 fractions
 	else if (getNumerator() == 0) {
 		result = numToString(getNumerator());
@@ -247,18 +274,28 @@ void Fraction::toLowestTerms(Fraction& fractionObj) {
 		fractionObj.setNumerator(newNumerator);
 		fractionObj.setDenominator(newDenominator);
 	}
+	else {
+		throw DivideByZeroException(__FILE__, __LINE__);
+	}
 }
 
 // function that will modify the fraction references to have common denominators (supports things like add/sub and comparison)
 void Fraction::toCommonDenominator(Fraction& fraction1, Fraction& fraction2) {
 	// get the lcm of the denominators
-	int lcm = getLcm(fraction1.getDenominator(), fraction2.getDenominator());
+	try {
+		int lcm = getLcm(fraction1.getDenominator(), fraction2.getDenominator());
 
-	// use the LCM to determine how much to multiply each fraction by in order to get the denominators equal to the LCM
-	int mult1 = lcm / fraction1.getDenominator();
-	int mult2 = lcm / fraction2.getDenominator();
 
-	// multiply each fraction by the amount needed to make the denominators equal to LCM
-	fraction1 = fraction1 * Fraction(mult1, mult1);
-	fraction2 = fraction2 * Fraction(mult2, mult2);
+		// use the LCM to determine how much to multiply each fraction by in order to get the denominators equal to the LCM
+		// no divide by zero can happen here since getLcm() will throw it if possible
+		int mult1 = lcm / fraction1.getDenominator();
+		int mult2 = lcm / fraction2.getDenominator();
+
+		// multiply each fraction by the amount needed to make the denominators equal to LCM
+		fraction1 = fraction1 * Fraction(mult1, mult1);
+		fraction2 = fraction2 * Fraction(mult2, mult2);
+	}
+	catch (DivideByZeroException &ex) {
+		throw ex;
+	}
 }

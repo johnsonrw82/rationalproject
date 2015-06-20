@@ -11,9 +11,15 @@
 #ifndef RATIONAL_ARRAY_H
 #define RATIONAL_ARRAY_H
 
-#include "Rational.h"
+#include <exception>
+#include <stdexcept>
 
-#define MAX_SIZE 20
+#include "Rational.h"
+#include "RationalException.h"
+#include "ArrayIndexOutOfBoundsException.h"
+#include "InvalidArgumentException.h"
+
+#define INIT_CAPACITY 20
 
 using namespace rational;
 
@@ -24,10 +30,21 @@ public:
 	RationalArray();
 	// construct with an initial size
 	RationalArray(int initialSize);
-	~RationalArray();
+	// copy constructor
+	RationalArray(const RationalArray& ra);
+	// destructor
+	virtual ~RationalArray();
+
+	// assignment operator
+	RationalArray& operator=(const RationalArray& ra);
+
+	// equality operators
+	bool operator==(const RationalArray& ra) const;
+	bool operator!=(const RationalArray& ra) const;
 
 	// retrieve an element
 	Rational retrieve(int index) const;
+	//Rational* retrieve(int index) const;
 
 	// add an object
 	void add(const Rational& rationalObj);
@@ -43,6 +60,8 @@ public:
 	Rational remove(int index);
 	// size of the container
 	std::size_t size() const;
+	// capacity of the container
+	std::size_t capacity() const;
 
 	// clear container
 	void clear();
@@ -52,9 +71,22 @@ public:
 
 private:
 	// underlying storage
-	Rational rationalArray[MAX_SIZE];
+	Rational** rationalArray;
 	// item count
-	int count;
+	unsigned int count;
+	// max capacity
+	unsigned int maxCapacity;
+
+	// resize and copy the original array contents to a new, bigger array. return the new size
+	std::size_t resizeAndCopy(Rational **& originalArray, std::size_t size);
+	// init array resources
+	void initArray(Rational**& arrayRef, std::size_t size);
+	// free array resources
+	void freeArray(Rational**& arrayRef);
+
+	void badAllocHandler(const char* reason, Rational**& arrayRef);
 };
+
+
 
 #endif

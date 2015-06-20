@@ -15,6 +15,10 @@
 #include <sstream>
 #include <string>
 
+#include "InvalidFormatException.h"
+#include "InvalidArgumentException.h"
+#include "DivideByZeroException.h"
+
 /*
 * class definition for Fraction
 *
@@ -57,6 +61,10 @@ public:
 	Fraction& operator=(Fraction fraction);
 	// overload for <<, declared as friend
 	friend std::ostream& operator<<(std::ostream& os, const Fraction& fraction);
+
+	// equality operators
+	bool operator==(const Fraction& fraction) const;
+	bool operator!=(const Fraction& fraction) const;
 
 	// get double representation
 	double toDouble() const;

@@ -24,6 +24,21 @@
     <ClInclude Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\Fraction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\RationalException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\ArrayIndexOutOfBoundsException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\InvalidArgumentException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\InvalidFormatException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\DivideByZeroException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\Fraction.cpp">
@@ -36,7 +51,22 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\RationalArray.cpp">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\RationalException.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\ArrayIndexOutOfBoundsException.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\InvalidArgumentException.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\DivideByZeroException.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\InvalidFormatException.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

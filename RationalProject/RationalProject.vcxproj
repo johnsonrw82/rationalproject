@@ -69,15 +69,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\ArrayIndexOutOfBoundsException.h" />
+    <ClInclude Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\DivideByZeroException.h" />
     <ClInclude Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\Fraction.h" />
+    <ClInclude Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\InvalidArgumentException.h" />
+    <ClInclude Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\InvalidFormatException.h" />
     <ClInclude Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\Rational.h" />
     <ClInclude Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\RationalArray.h" />
+    <ClInclude Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\RationalException.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\ArrayIndexOutOfBoundsException.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\DivideByZeroException.cpp" />
     <ClCompile Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\Fraction.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\InvalidArgumentException.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\InvalidFormatException.cpp" />
     <ClCompile Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\Main.cpp" />
     <ClCompile Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\Rational.cpp" />
     <ClCompile Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\RationalArray.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\Ryan%27s Folder\Programming\C++\Assignments\RationalProject\RationalProject\RationalException.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

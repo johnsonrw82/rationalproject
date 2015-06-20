@@ -13,6 +13,7 @@
 
 // superclass header file
 #include "Fraction.h"
+#include <regex>
 
 // namespace -- this class will define functions that may clash with std namespace (such as pow)
 namespace rational {
