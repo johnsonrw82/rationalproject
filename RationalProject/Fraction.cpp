@@ -120,10 +120,12 @@ Fraction Fraction::operator/(const Fraction& fraction) {
 }
 
 // equality operators
+// return true if these Fractions are equal
 bool Fraction::operator==(const Fraction& fraction) const {
 	return getNumerator() == fraction.getNumerator() && getDenominator() == fraction.getDenominator();
 }
 
+// return true if these fractions are not equal
 bool Fraction::operator!=(const Fraction& fraction) const {
 	return !(*this == fraction);
 }

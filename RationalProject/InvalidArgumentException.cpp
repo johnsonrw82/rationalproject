@@ -1,3 +1,13 @@
+/**
+* File: InvalidArgumentException.cpp
+* Author: Ryan Johnson
+* Email: johnsonrw82@csu.fullerton.edu
+*
+* This class provides an implementation of an exception type used for cases when an invalid argument has been supplied to a function or constructor
+* This class does not inherit from type std::invalid_argument because it causes ambiguity errors with std::exception, which RationalException is derived from.
+* That class provides more functionality than std::exception, so it is preferred over the existing exception type.
+*/
+
 #include "InvalidArgumentException.h"
 
 namespace rational {
@@ -7,6 +17,9 @@ namespace rational {
 		InvalidArgumentException::InvalidArgumentException(const std::string reason, const std::string argument, const std::string fileName, const int lineNum)
 			: RationalException("Invalid argument exception", fileName, lineNum),
 			reason(reason), argument(argument) {}
+
+		// destructor
+		InvalidArgumentException::~InvalidArgumentException() {}
 
 		// return the information from the exception, including the index
 		const char* InvalidArgumentException::what() const throw() {

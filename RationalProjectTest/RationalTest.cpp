@@ -707,6 +707,7 @@ TEST_F(RationalTest, TestRead) {
 	EXPECT_EQ(Rational(5), actual);
 	EXPECT_EQ(Rational(5), actual2);
 
+	// allow trailing spaces
 	ss.clear();
 	ss.str("12/3 ");
 	ss2.clear();

@@ -1,3 +1,12 @@
+/**
+* File: RationalException.h
+* Author: Ryan Johnson
+* Email: johnsonrw82@csu.fullerton.edu
+*
+* This class provides an implementation of an exception type used to indicate there was an exception involved with a Rational object.
+* This class inherits from std::exception, and also provides a file name and line number for reference.
+*/
+
 #ifndef RATIONAL_EXCEPTION_H
 #define RATIONAL_EXCEPTION_H
 
@@ -18,11 +27,15 @@ namespace rational {
 		public:
 			// define a constructor for ArrayIndexOutOfBounds
 			RationalException(const char* msg, std::string fileName, int lineNum);
+			// copy constructor
 			RationalException(const RationalException& ex);
+			// destructor
 			virtual ~RationalException();
 			
+			// assignment operator
 			RationalException& operator=(const RationalException& ex);
 
+			// what happened?
 			virtual const char* what() const throw();
 
 			// stream operator overload
@@ -35,8 +48,11 @@ namespace rational {
 			int getLineNum() const;
 
 		private:
+			// message
 			const char* msg;
+			// filename
 			std::string fileName;
+			// line number
 			int lineNum;
 		};
 	}

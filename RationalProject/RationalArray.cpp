@@ -13,8 +13,10 @@
 
 using namespace rational::exception;
 
+// constructor
 RationalArray::RationalArray() : RationalArray(INIT_CAPACITY) {}
 
+// constructor with initial size
 RationalArray::RationalArray(int initialSize) {
 	if (initialSize <= 0) {
 		std::stringstream ss;
@@ -78,6 +80,8 @@ bool RationalArray::operator!=(const RationalArray& ra) const {
 	return !(*this == ra);
 }
 
+// retrieve a Rational object from the container using the specified index
+// throws an ArrayIndexOutOfBoundsException if the index exceeds the bounds of the underlying container
 Rational RationalArray::retrieve(int index) const {
 	if (index >= 0 && static_cast<unsigned int>(index) < size()) {
 		return *rationalArray[index];
@@ -87,6 +91,8 @@ Rational RationalArray::retrieve(int index) const {
 	}
 }
 
+// add a Rational to the end of the container
+// container will resize itself if necessary
 void RationalArray::add(const Rational& rationalObj) {
 	// if the array is too small, resize and copy
 	if (size() >= maxCapacity) {
@@ -100,6 +106,7 @@ void RationalArray::add(const Rational& rationalObj) {
 	count++;
 }
 
+// add a Rational* to the container. no-op if rationalPtr is nullptr
 void RationalArray::add(Rational* rationalPtr) {
 	// add the contents of this pointer to the array
 	if (rationalPtr != nullptr) {
@@ -107,6 +114,7 @@ void RationalArray::add(Rational* rationalPtr) {
 	}
 }
 
+// replace the specified rational object at index, with rationalObj
 void RationalArray::replace(int index, const Rational& rationalObj) {
 	// prevent under/over indexing
 	if (index >= 0 && static_cast<unsigned int>(index) < size()) {
@@ -116,11 +124,14 @@ void RationalArray::replace(int index, const Rational& rationalObj) {
 		throw ArrayIndexOutOfBoundsException(index, __FILE__, __LINE__);
 	}
 }
+
+// replace rational at index with pointer-specified rational object
 void RationalArray::replace(int index, Rational* rationalPtr) {
 	if (rationalPtr != nullptr)
 		replace(index, *rationalPtr);
 }
 
+// remove rational from index and return
 Rational RationalArray::remove(int index) {
 	if (index >= 0 && static_cast<unsigned int>(index) < size()) {
 		Rational removeElement = *rationalArray[index];
@@ -140,7 +151,7 @@ Rational RationalArray::remove(int index) {
 	}
 }
 
-// reset the array to nominal size
+// reset the array to initial size
 void RationalArray::clear() {
 	// free resources
 	freeArray(rationalArray);
@@ -153,6 +164,7 @@ void RationalArray::clear() {
 	maxCapacity = INIT_CAPACITY;
 }
 
+// print the contents of the array
 void RationalArray::printArray() const {
 	for (unsigned int i = 0; i < size(); i++) {
 		std::cout << *(rationalArray[i]) << std::endl;
@@ -169,6 +181,7 @@ std::size_t RationalArray::capacity() const {
 	return maxCapacity;
 }
 
+// private function that will resize the reference container to specified size and copy elements
 std::size_t RationalArray::resizeAndCopy(Rational **&originalArray, std::size_t size) {
 	unsigned int newSize = (unsigned int)(size * 1.5); // grow by 1.5
 	if (newSize == size) {
@@ -210,10 +223,13 @@ void RationalArray::initArray(Rational**& arrayRef, std::size_t size) {
 	}
 }
 
+// free the specified array reference
 void RationalArray::freeArray(Rational**& arrayRef) {
 	delete[] arrayRef;
 }
 
+// handler used if bad_alloc is thrown
+// this will free all resources, print to std::cerr and terminate.
 void RationalArray::badAllocHandler(const char* reason, Rational**& arrayRef) {
 	// tell the user what happened
 	std::cerr << "Unable to allocate memory.\nReason = " << reason << "\nFreeing resources and terminating program" << std::endl;

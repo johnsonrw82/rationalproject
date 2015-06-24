@@ -84,6 +84,7 @@ private:
 	// free array resources
 	void freeArray(Rational**& arrayRef);
 
+	// handler used for when bad_alloc is thrown
 	void badAllocHandler(const char* reason, Rational**& arrayRef);
 };
 

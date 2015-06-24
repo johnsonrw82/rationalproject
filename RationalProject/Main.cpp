@@ -15,64 +15,83 @@ using namespace rational;
 using namespace rational::exception;
 
 int main() {
-	Rational r12;
-	r12.read(std::cin);
+	Rational aRational;
+	std::istringstream iss;
+	iss.str("4/3");
+	aRational.read(iss);
 
+	// write back out to std::cout
+	aRational.write(std::cout, Rational::FRACTION);
 
-	//RationalArray ra1(10000000);
-	//RationalArray ra2(10000000); 
-	//RationalArray ra3(10000000); 
-	//RationalArray ra4(10000000); 
+	// test invalid argument (negative initial size)
 	try {
-		RationalArray ra5(-10);
+		RationalArray ra1(-10);
 	}
 	catch (InvalidArgumentException &e) {
 		std::cerr << e.what() << std::endl;
 	}
 
+	// test a divide by zero exception
 	try {
-		throw DivideByZeroException("test", 12);
+		Rational r1(3);
+		Rational r2(0, 0);
+		Rational r3 = r1 / r2;
+		std::cout << r3 << std::endl;
 	}
 	catch (DivideByZeroException &ex) {
-		std::cerr << ex << std::endl;
+		std::cerr << ex << std::endl; // try with stream overload
 	}
 
+	// test invalid format
 	try {
-		throw InvalidFormatException("because you ugly" ,"test", 12);
+		iss.clear();
+		iss.str("4/x"); // invalid format
+		Rational r4;
+		r4.read(iss);
 	}
 	catch (InvalidFormatException &ex) {
 		std::cerr << ex << std::endl;
 	}
 
-	RationalArray ra;  // create a rational array
+	RationalArray ra2;  // create a rational array
 	// create some rationals
-	Rational r(1, 2);
-	Rational* r2 = new Rational(2, 3);
+	Rational r(1, 2); // object
+	Rational* r2 = new Rational(2, 3); // pointer references
 	Rational* r3 = new Rational(3, 4);
 
-	// add two of them to the array
-	ra.add(r);
-	ra.add(r3);
-	ra.add(r2);
+	// add them to the array
+	ra2.add(r);
+	ra2.add(r3);
+	ra2.add(r2);	 
 
+	// try invalid index
 	try {
-		ra.retrieve(-1);
+		ra2.retrieve(-1);
 	}
 	catch (ArrayIndexOutOfBoundsException& e) {
 		std::cerr << e.what() << std::endl;
 	}
 
-	//std::cout << *(ra.retrieve(2)) << std::endl;
-	// replace one of them
-	//ra.replace(1,r2);
-
 	// print the array contents
-	ra.printArray();
+	std::cout << "Rational array contents:" << std::endl;
+	ra2.printArray();
+
+	// replace one with another
+	ra2.replace(1, Rational(5, 6));
+
+	// print again
+	std::cout << "Rational array contents:" << std::endl;
+	ra2.printArray();
 
 	// print out the rationals to ensure they haven't been modified
-	std::cout << "The rationals created are: " << std::endl;
+	std::cout << "The rationals created were: " << std::endl;
 	std::cout << r << std::endl;
 	std::cout << *r2 << std::endl;
 	std::cout << *r3 << std::endl;
+
+	// no longer needed
+	delete r2;
+	delete r3;
+
 	return 0;
 }

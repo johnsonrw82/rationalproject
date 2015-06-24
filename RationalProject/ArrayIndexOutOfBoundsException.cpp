@@ -1,3 +1,12 @@
+/**
+* File: ArrayIndexOutOfBoundsException.cpp
+* Author: Ryan Johnson
+* Email: johnsonrw82@csu.fullerton.edu
+*
+* This class provides an implementation of an exception type that is used to indicate when an array index is out of bounds.
+* It provides an index field that indicates the desired index.
+*/
+
 #include "ArrayIndexOutOfBoundsException.h"
 
 namespace rational {
@@ -6,6 +15,9 @@ namespace rational {
 		ArrayIndexOutOfBoundsException::ArrayIndexOutOfBoundsException(const int index, const std::string fileName, const int lineNum)
 			: RationalException("Array index out of bounds", fileName, lineNum),
 			index(index) {}
+
+		// destructor
+		ArrayIndexOutOfBoundsException::~ArrayIndexOutOfBoundsException() {}
 
 		// return the information from the exception, including the index
 		const char* ArrayIndexOutOfBoundsException::what() const throw() {
@@ -37,6 +49,7 @@ namespace rational {
 			return os;
 		}
 
+		// get the index referenced
 		int ArrayIndexOutOfBoundsException::getIndex() const {
 			return index;
 		}

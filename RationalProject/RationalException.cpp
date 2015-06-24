@@ -1,3 +1,12 @@
+/**
+* File: RationalException.cpp
+* Author: Ryan Johnson
+* Email: johnsonrw82@csu.fullerton.edu
+*
+* This class provides an implementation of an exception type used to indicate there was an exception involved with a Rational object.
+* This class inherits from std::exception, and also provides a file name and line number for reference.
+*/
+
 #include "RationalException.h"
 
 namespace rational {
