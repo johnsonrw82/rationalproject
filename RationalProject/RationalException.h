@@ -14,7 +14,6 @@
 
 #include <iostream>
 #include <sstream>
-#include <stdexcept>
 #include <string>
 #include <cstdlib>
 #include <cstring>

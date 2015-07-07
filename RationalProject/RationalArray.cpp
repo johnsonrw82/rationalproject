@@ -83,7 +83,7 @@ bool RationalArray::operator!=(const RationalArray& ra) const {
 // retrieve a Rational object from the container using the specified index
 // throws an ArrayIndexOutOfBoundsException if the index exceeds the bounds of the underlying container
 Rational RationalArray::retrieve(int index) const {
-	if (index >= 0 && static_cast<unsigned int>(index) < size()) {
+	if (index >= 0 && (unsigned int)index < size()) {
 		return *rationalArray[index];
 	}	
 	else {
@@ -117,7 +117,7 @@ void RationalArray::add(Rational* rationalPtr) {
 // replace the specified rational object at index, with rationalObj
 void RationalArray::replace(int index, const Rational& rationalObj) {
 	// prevent under/over indexing
-	if (index >= 0 && static_cast<unsigned int>(index) < size()) {
+	if (index >= 0 && (unsigned int)index < size()) {
 		*rationalArray[index] = rationalObj;
 	}
 	else {
@@ -133,7 +133,7 @@ void RationalArray::replace(int index, Rational* rationalPtr) {
 
 // remove rational from index and return
 Rational RationalArray::remove(int index) {
-	if (index >= 0 && static_cast<unsigned int>(index) < size()) {
+	if (index >= 0 && (unsigned int) index < size()) {
 		Rational removeElement = *rationalArray[index];
 
 		// shift all elements from index+1 down by 1

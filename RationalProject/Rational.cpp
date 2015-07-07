@@ -729,7 +729,7 @@ namespace rational {
 		}
 
 		// return new fraction object with new calculated value as numerator, and 10^powOfTen as denominator
-		return Fraction(static_cast<int>(newValue), static_cast<int>(std::pow(10, powOfTen - 1)));
+		return Fraction((int)newValue, (int)(std::pow(10, powOfTen - 1)));
 	}
 }
 
